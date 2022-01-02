@@ -7,12 +7,10 @@ const Schema = mongoose.Schema;
 const movieSchema = new Schema({
     plot: {
         type: String,
-        minlength: 2,
         required: [true, 'Please add plot']
     },
     title: {
         type: String,
-        minlength: 2,
         required: [true, 'Please add title']
     },
     directors: {
@@ -21,12 +19,10 @@ const movieSchema = new Schema({
     },
     year: {
         type: Number,
-        minlength: 2,
         required: [true, 'Please add year released']
     },
     type: {
         type: String,
-        minlength: 2
     }
 },{ versionKey: false });
 const Movie = mongoose.model('Movie', movieSchema, 'movies');
