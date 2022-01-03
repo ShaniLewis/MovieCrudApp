@@ -5,6 +5,7 @@ export default class Movie extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangePoster = this.onChangePoster.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangePlot = this.onChangePlot.bind(this);
     this.onChangeDirectors = this.onChangeDirectors.bind(this);
@@ -12,7 +13,8 @@ export default class Movie extends Component {
     this.onChangeType = this.onChangeType.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-      this.state = {
+    this.state = {
+          poster: '',
           title: '',
           plot: '',
           directors: [],
@@ -22,26 +24,12 @@ export default class Movie extends Component {
       }
     }
     
-    // componentDidMount() {
-    //     axios.get('http://localhost:5000/movies/')
-    //       .then(response => {
-    //         if (response.data.length > 0) {
-    //           this.setState({
-    //             movies: response.data.map(movie => movie.title),
-    //               title: response.data[0].title,
-    //               plot: response.data[1].plot,
-    //               directors: response.data[2].directors,
-    //               year: response.data[3].year,
-    //               type: response.data[4].type
-    //           })
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       })
-    //}
-    
-    
+    onChangePoster(e) {
+      this.setState({
+        poster: e.target.value
+      })
+    }  
+  
   onChangeTitle(e) {
     this.setState({
       title: e.target.value
@@ -70,14 +58,15 @@ export default class Movie extends Component {
     onChangeType(e) {
         this.setState({
         type: e.target.value
-    
         })
       }
 
   onSubmit(e) {
+    //prevents the default HTML form submit behavior from taking place.
     e.preventDefault();
 
     const movie = {
+      poster: this.state.poster,
       title: this.state.title,
       plot: this.state.plot,
       directors: this.state.directors,
@@ -93,16 +82,33 @@ export default class Movie extends Component {
       console.log("Movie Added!");
   }
 
-    
   render() {
     return (
     <div>
       <h3>Create New Movie Log</h3>
       <form onSubmit={this.onSubmit}>
 
+      <div className="form-group"> 
+          <label>Poster</label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={this.state.poster}
+              onChange={this.onChangePoster}
+            />
+          </div>
+          
+          <div className="preview"> 
+            <label> Poster Image Preview:</label>
+            <br></br>
+            <img src={this.state.poster}
+              with="100px" alt="Image link Invalid" />
+          </div>
+          
         <div className="form-group"> 
           <label>Title</label>
-          <input  type="text"
+            <input
+              type="text"
               required
               className="form-control"
               value={this.state.title}
@@ -119,6 +125,7 @@ export default class Movie extends Component {
               onChange={this.onChangePlot}
               />
         </div>
+        
         <div className="form-group">
           <label>Directors</label>
           <input 
@@ -127,8 +134,8 @@ export default class Movie extends Component {
               value={this.state.directors}
               onChange={this.onChangeDirectors}
               />
-        
-        </div>
+          </div>
+          
         <div className="form-group">
           <label>Year</label>
           <input 
@@ -147,7 +154,8 @@ export default class Movie extends Component {
               value={this.state.type}
               onChange={this.onChangeType}
               />
-        </div>
+          </div>
+          
 
         <div className="form-group">
           <input type="submit" value="Create Movie Log" className="btn btn-primary" />

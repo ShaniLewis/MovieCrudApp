@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Movie = props => (
   <tr>
+    <td><img src={props.movie.poster} alt="" width="100"/></td>
     <td>{props.movie.title}</td>
     <td>{props.movie.plot}</td>
     <td>{props.movie.directors}</td>
@@ -11,7 +12,7 @@ const Movie = props => (
     <td>{props.movie.type}</td>
 
     <td>
-      <Link to={"/edit/"+props.movie._id}>edit</Link> | <a href="#" onClick={() => { props.deleteMovie(props.movie._id) }}>delete</a>
+      <Link to={"/edit/"+props.movie._id}>edit</Link> <a href="#" onClick={() => { props.deleteMovie(props.movie._id) }}>delete</a>
     </td>
   </tr>
 )
@@ -57,6 +58,7 @@ export default class moviesList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
+              <th>Poster</th>
               <th>Title</th>
               <th>Plot</th>
               <th>Directors</th>
@@ -67,7 +69,7 @@ export default class moviesList extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.moviesList() }
+            { this.moviesList()}
           </tbody>
         </table>
       </div>

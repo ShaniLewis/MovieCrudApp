@@ -4,7 +4,8 @@ import axios from 'axios';
 export default class EditMovies extends Component {
   constructor(props) {
     super(props);
-
+    
+    this.onChangePoster = this.onChangePoster.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangePlot = this.onChangePlot.bind(this);
     this.onChangeDirectors = this.onChangeDirectors.bind(this);
@@ -14,6 +15,7 @@ export default class EditMovies extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      poster: '',
       title: '',
       plot: '',
       directors: [],
@@ -27,6 +29,7 @@ export default class EditMovies extends Component {
     axios.get('http://localhost:5000/movies/'+this.props.match.params.id)
       .then(response => {
         this.setState({
+          poster: response.data.poster,
           title: response.data.title,
           plot: response.data.plot,
           directors: response.data.directors,
@@ -53,7 +56,11 @@ export default class EditMovies extends Component {
 
   }
 
-
+  onChangePoster(e) {
+    this.setState({
+      poster: e.target.value
+    })
+  }
   onChangeTitle(e) {
     this.setState({
       title: e.target.value
@@ -90,6 +97,7 @@ export default class EditMovies extends Component {
     e.preventDefault();
 
     const movie = {
+      poster: this.state.poster,
       title: this.state.title,
       plot: this.state.plot,
       directors: this.state.directors,
@@ -111,7 +119,25 @@ export default class EditMovies extends Component {
     <div>
       <h3>Edit Exercise Log</h3>
       <form onSubmit={this.onSubmit}>
-        <div className="form-group"> 
+          <div className="form-group">    
+          
+          <label>Poster Image Link</label>
+            <input 
+                type="text"
+                className="form-control"
+              value={this.state.poster}
+              onChange={this.onChangePoster}>
+          </input>
+          </div>
+          
+          <div className="preview"> 
+            <label> Poster Image Preview:</label>
+            <br></br>
+            <img src={this.state.poster}
+              with="100px" alt="" />
+          </div>
+
+            <div className="form-group">    
           <label>Title</label>
             <input 
                 type="text"

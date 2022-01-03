@@ -12,3 +12,7 @@ code {
     monospace;
 }
 
+.form-group .form-control {
+  width:300px;
+}
+
