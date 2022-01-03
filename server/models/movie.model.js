@@ -5,6 +5,10 @@ mongoose.connect(uri);
 const Schema = mongoose.Schema;
 
 const movieSchema = new Schema({
+    poster: {
+        type: String,
+        required: [true, 'Please add pic link']
+    },
     plot: {
         type: String,
         required: [true, 'Please add plot']
